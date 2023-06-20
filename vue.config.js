@@ -1,6 +1,6 @@
 const { defineConfig } = require('@vue/cli-service')
 module.exports = defineConfig({
-  publicPath: process.env.NODE_ENV === "production" ? "/prisma/" : "/",
+  publicPath: process.env.NODE_ENV === "production" ? "/legendary/" : "/",
   transpileDependencies: true,
   devServer: {
     allowedHosts: 'all',
