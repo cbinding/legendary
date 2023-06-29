@@ -32,15 +32,25 @@ export const useLegendStore = defineStore('legend', {
             this.nextID = 0
         },
         importJSON(json) {
-            this.reset()
             const data = JSON.parse(json)
+            this.importData(data)
+            //this.setTitle(data.title || "")
+            //this.setDescription(data.description || "")
+            //this.setCreator(data.creator || "")
+            //this.setContact(data.contact || "")
+            //this.setVersion(data.version || "")
+            //this.setLicense(data.license || "");            
+            //(data.items || []).forEach(item => this.addItem(item))            
+        },
+        importData(data) {
+            this.reset()
             this.setTitle(data.title || "")
             this.setDescription(data.description || "")
             this.setCreator(data.creator || "")
             this.setContact(data.contact || "")
             this.setVersion(data.version || "")
             this.setLicense(data.license || "");            
-            (data.items || []).forEach(item => this.addItem(item))            
+            (data.items || []).forEach(item => this.addItem(item))    
         },
         exportJSON() { 
             return JSON.stringify(this.$state) 

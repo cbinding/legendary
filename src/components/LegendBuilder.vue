@@ -1,36 +1,76 @@
 <template>    
     <div class="card">
         <div class="card-header text-center fw-bold">Legendary</div>
+
         <div class="card-body p-2">
-            <div class="input-group input-group-sm p-1">
-                <label for="importfile" class="input-group-text"><i class="bi bi-filetype-json"></i>&nbsp;Import</label>  
-                <input 
-                    type="file" 
-                    id="importfile" 
-                    name="importfile" 
-                    accept="application/json"
-                    class="form-control  form-control-sm"
-                    @change.stop="importData">
-            </div>  
-
-            <div class="input-group input-group-sm p-1">                         
-                <label for="exportfile" class="input-group-text"><i class="bi bi-filetype-json"></i>&nbsp;Export</label> 
+            <form>               
+                <div class="form-check form-check-inline">
+                    <input 
+                        class="form-check-input" 
+                        type="radio" 
+                        name="importSource" 
+                        id="importFromFile" 
+                        value="fromFile"
+                        v-model="importSource" />
+                    <label 
+                        class="form-check-label" 
+                        for="importFromFile">Import from file</label>
+                
+                </div>
+                <div class="form-check form-check-inline">
+                    <input 
+                        class="form-check-input" 
+                        type="radio" 
+                        name="importSource" 
+                        id="importFromURL" 
+                        value="fromURL"
+                        v-model="importSource" />
+                    <label 
+                        class="form-check-label" 
+                        for="importFromURL">Import from URL</label>
+                </div>
                 <button 
                     type="button"
-                    id="exportfile" 
-                    name="exportfile" 
-                    class="btn btn-sm btn-outline-secondary"
-                    @click.stop="exportData">Choose file</button>
-                <input type="text" class="form-control form-control-sm" disabled/>
-            
-                <button 
-                    type="button"
-                    @click.stop="clearData" 
+                    @click.stop="confirmClearData" 
                     class="btn btn-sm btn-outline-secondary rounded shadow">
-                    <i class="bi bi-x-circle"></i>&nbsp;Clear All</button>            
-            </div>
+                    <span><i class="bi bi-x-circle"></i>&nbsp;Clear All Data</span>
+                </button>   
+                <div class="input-group input-group-sm p-1" v-show="importSource == 'fromFile'">
+                    <label for="importFile" class="input-group-text"><i class="bi bi-filetype-json"></i>&nbsp;Import</label>  
+                    <input 
+                        type="file" 
+                        id="importFile" 
+                        name="importFile" 
+                        accept="application/json"
+                        class="form-control form-control-sm"
+                        @change.stop="importFromFile">                     
+                </div>
+                <div class="input-group input-group-sm p-1" v-show="importSource == 'fromURL'">
+                    <label for="importURL" class="input-group-text"><i class="bi bi-filetype-json"></i>&nbsp;Import</label> 
+                    <input 
+                        type="text" 
+                        id="importURL" 
+                        name="importURL" 
+                        class="form-control form-control-sm"
+                        v-model="currentURL">
+                    <button type="button"
+                        @click.stop="importFromURL" 
+                        class="btn btn-sm btn-outline-secondary rounded shadow float-right">
+                    <i class="bi bi-check-circle"></i>&nbsp;Go</button>      
+                </div>   
 
-            
+                <div class="input-group input-group-sm p-1">                         
+                    <label for="exportfile" class="input-group-text"><i class="bi bi-filetype-json"></i>&nbsp;Export</label> 
+                    <button 
+                        type="button"
+                        id="exportfile" 
+                        name="exportfile" 
+                        class="btn btn-sm btn-outline-secondary"
+                        @click.stop="exportData">Choose file</button>
+                    <input type="text" class="form-control form-control-sm" disabled/>            
+                    
+                </div>                  
+            </form>
 
             <div class="nav nav-tabs">                
                 <a class="nav-link" href="#" @click.stop="openTab($event, 'Items')" id="defaultOpen">Items <span class="badge text-bg-light border rounded-pill">{{ itemCount }}</span></a>                       
@@ -51,6 +91,7 @@
                     (${store.itemCount} item${store.itemCount == 1 ? "": "s"})`}}</small>
             </div>   -->      
         </div>
+        <div class="card-footer small">{{ footerMessage }}</div>
     </div>        
 </template>
 
@@ -63,30 +104,53 @@
     const store = useLegendStore() 
     
     const itemCount = computed(() => store.items.length)
-    
+    const importSource = ref("fromFile")
     const currentFile = ref("")
+    const currentURL = ref("")
+    const footerMessage = ref("")
+
     //const palette = computed(() => store.items.value.map(item => item.colour).filter(c => c))
     onMounted(() => {
         // Get the element with id="defaultOpen" and click on it
         document.getElementById("defaultOpen").click();
     });
-    
-    const clearData = () => {
+
+    const confirmClearData = () => {
         if(confirm("This will clear all data, are you sure?")) {
-            document.getElementById("importfile").value=""
-            store.reset()            
+            clearData()
         }
     }
+    
+    const clearData = () => {
+        document.getElementById("importFile").value=""
+        importSource.value = "fromFile"
+        currentFile.value = ""
+        currentURL.value = ""
+        footerMessage.value = ""
+        store.reset()
+    }
 
-    const importData = event => { 
+    const importFromFile = event => { 
+        footerMessage.value = ""
+        store.reset()
         currentFile.value = event.target.files[0]            
         const reader = new FileReader()
         reader.onload = function(e) {
             store.importJSON(e.target.result)				
         }
-        reader.readAsText(currentFile.value)
-        //document.getElementById("importfile").value=""
+        reader.readAsText(currentFile.value)        
 	} 
+
+    const importFromURL = async () => {
+        //console.log(`URL = '${event.target.value}'`)
+        footerMessage.value = ""
+        store.reset()
+        if(currentURL.value == "") return
+        fetch(currentURL.value, { headers: { accept: 'application/json' }})
+            .then(response => response.json())
+            .then(data => store.importData(data)) 
+            .catch(error => footerMessage.value = error)  //todo - display error (in footer?)           
+    }
 
     const timestampISO = () => new Date().toISOString() // e.g. "2022-03-04T08:13:47.578Z"
     const timestamp = () => timestampISO().replaceAll(/[:.\-Z]/g,"") // e.g. "20211225T120523"
@@ -95,7 +159,7 @@
         const data = store.exportJSON() 
         const fileName = currentFile.value?.name || `legend-${ timestamp() }.json`        
         saveToFile(data, fileName)  
-        document.getElementById("importfile").value=""      
+        document.getElementById("importFile").value=""      
     }
 
     // this function used in Phaser, from https://forum.vuejs.org/t/saving-form-data/38714
@@ -143,37 +207,6 @@
 
 <style scoped>
 button { cursor: pointer; }
-.header, .footer {
-    text-align: center;
-    background: lightgray;
-    padding: 5px;
-    margin: 0px;
-}
-.menu {padding: 3px;}
-.legend-builder { 
-    padding: 0px;
-    border: 1px solid lightgray; 
-    width: 500px; 
-    text-align: left;
-}
-
-/* Style the tab */
-.tab1 {
-  overflow: hidden;
-  border: 1px solid #ccc;
-  background-color: #f1f1f1;
-}
-
-/* Style the buttons that are used to open the tab content */
-.tablinks1 {
-  background-color: inherit;
-  float: left;
-  border: none;
-  outline: none;
-  cursor: pointer;
-  padding: 10px 12px;
-  transition: 0.3s;
-}
 
 /* Style the tab content */
 .tabcontent {
