@@ -2,7 +2,7 @@
     <div class="legend-metadata">
         <form>
             <div class="mb-2">
-                <label for="legend-title">Title</label>           
+                <label for="legend-title" class="small">Title</label>           
                 <input 
                     type="text" 
                     v-model="title" 
@@ -12,7 +12,7 @@
                     class="form-control form-control-sm shadow-sm rounded hoverable"/>            
             </div>
             <div class="mb-2">
-                <label for="legend-description">Description</label>
+                <label for="legend-description" class="small">Description</label>
                 <textarea 
                     type="text" 
                     v-model="description"
@@ -23,7 +23,7 @@
                 </textarea>
             </div>
             <div class="mb-2">
-                <label for="legend-creator">Creator</label>
+                <label for="legend-creator" class="small">Creator</label>
                 <input 
                     type="text" 
                     v-model="creator" 
@@ -33,7 +33,7 @@
                     class="form-control form-control-sm shadow-sm rounded hoverable"/>
             </div>
             <div class="mb-2">
-                <label for="legend-contact">Contact</label>
+                <label for="legend-contact" class="small">Contact</label>
                 <input 
                     type="text" 
                     v-model="contact" 
@@ -43,7 +43,7 @@
                     class="form-control form-control-sm shadow-sm rounded hoverable"/>
             </div>
             <div class="mb-2">
-                <label for="legend-version">Version</label>
+                <label for="legend-version" class="small">Version</label>
                 <input 
                     type="text" 
                     v-model="version" 
@@ -53,7 +53,7 @@
                     class="form-control form-control-sm shadow-sm rounded hoverable"/>
             </div>
             <div class="mb-2">
-                <label for="legend-license">License</label>
+                <label for="legend-license" class="small">License</label>
                 <input 
                     type="text" 
                     v-model="license" 
@@ -63,7 +63,7 @@
                     class="form-control form-control-sm shadow-sm rounded hoverable"/> 
             </div>    
             <div class="mb-2">
-                <label for="legend-created">Created</label>
+                <label for="legend-created" class="small">Created</label>
                 <input 
                     id="legend-created" 
                     aria-disabled="true"
@@ -72,7 +72,7 @@
                     disabled/> 
             </div>   
             <div class="mb-2">     
-                <label for="legend-updated">Updated</label>
+                <label for="legend-updated" class="small">Updated</label>
                 <input
                     id="legend-updated" 
                     aria-disabled="true"

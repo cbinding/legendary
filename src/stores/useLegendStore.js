@@ -33,14 +33,7 @@ export const useLegendStore = defineStore('legend', {
         },
         importJSON(json) {
             const data = JSON.parse(json)
-            this.importData(data)
-            //this.setTitle(data.title || "")
-            //this.setDescription(data.description || "")
-            //this.setCreator(data.creator || "")
-            //this.setContact(data.contact || "")
-            //this.setVersion(data.version || "")
-            //this.setLicense(data.license || "");            
-            //(data.items || []).forEach(item => this.addItem(item))            
+            this.importData(data)      
         },
         importData(data) {
             this.reset()

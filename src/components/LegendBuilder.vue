@@ -14,8 +14,7 @@
                         v-model="importSource" />
                     <label 
                         class="form-check-label" 
-                        for="importFromFile">Import from file</label>
-                
+                        for="importFromFile">Import from file</label>                
                 </div>
                 <div class="form-check form-check-inline">
                     <input 
@@ -33,10 +32,14 @@
                     type="button"
                     @click.stop="confirmClearData" 
                     class="btn btn-sm btn-outline-secondary rounded shadow">
-                    <span><i class="bi bi-x-circle"></i>&nbsp;Clear All Data</span>
+                    <i class="bi bi-x-circle me-1"></i>
+                    <span>Clear All Data</span>
                 </button>   
                 <div class="input-group input-group-sm p-1" v-show="importSource == 'fromFile'">
-                    <label for="importFile" class="input-group-text"><i class="bi bi-filetype-json"></i>&nbsp;Import</label>  
+                    <label 
+                        for="importFile" 
+                        class="input-group-text">
+                        <i class="bi bi-filetype-json me-1"></i>Import</label>  
                     <input 
                         type="file" 
                         id="importFile" 
@@ -46,7 +49,10 @@
                         @change.stop="importFromFile">                     
                 </div>
                 <div class="input-group input-group-sm p-1" v-show="importSource == 'fromURL'">
-                    <label for="importURL" class="input-group-text"><i class="bi bi-filetype-json"></i>&nbsp;Import</label> 
+                    <label 
+                        for="importURL" 
+                        class="input-group-text">
+                        <i class="bi bi-filetype-json me-1"></i>Import</label> 
                     <input 
                         type="text" 
                         id="importURL" 
@@ -56,11 +62,14 @@
                     <button type="button"
                         @click.stop="importFromURL" 
                         class="btn btn-sm btn-outline-secondary rounded shadow float-right">
-                    <i class="bi bi-check-circle"></i>&nbsp;Go</button>      
+                    <i class="bi bi-check-circle me-1"></i>Go</button>      
                 </div>   
 
                 <div class="input-group input-group-sm p-1">                         
-                    <label for="exportfile" class="input-group-text"><i class="bi bi-filetype-json"></i>&nbsp;Export</label> 
+                    <label 
+                        for="exportfile" 
+                        class="input-group-text">
+                        <i class="bi bi-filetype-json me-1"></i>Export</label> 
                     <button 
                         type="button"
                         id="exportfile" 
@@ -71,10 +80,24 @@
                     
                 </div>                  
             </form>
-
+            <!--define tabs-->
             <div class="nav nav-tabs">                
-                <a class="nav-link" href="#" @click.stop="openTab($event, 'Items')" id="defaultOpen">Items <span class="badge text-bg-light border rounded-pill">{{ itemCount }}</span></a>                       
-                <a class="nav-link" href="#" @click.stop="openTab($event, 'Metadata')">Metadata</a>   
+                <a 
+                    class="nav-link" 
+                    href="#" 
+                    @click.stop="openTab($event, 'Items')" 
+                    id="defaultOpen">
+                    <span>Items</span>
+                    <span class="badge text-bg-light ms-1 border rounded-pill">{{ itemCount }}</span>
+                </a>                       
+                <a 
+                    class="nav-link" 
+                    href="#" 
+                    @click.stop="openTab($event, 'Metadata')">Metadata</a>   
+                <a 
+                    class="nav-link" 
+                    href="#" 
+                    @click.stop="openTab($event, 'Palette')">Palette</a>  
             </div>  
 
             <div id="Items" class="tabcontent bg-light">
@@ -83,13 +106,12 @@
 
             <div id="Metadata" class="tabcontent bg-light">
                 <LegendMetadata/>    
-            </div> 
+            </div>  
+
+            <div id="Palette" class="tabcontent bg-light">
+                <PaletteDisplay :colours="palette"/>
+            </div>       
             
-            <!--<div class="card-footer text-body-secondary text-center">
-                <small>{{ `${store.$state.title} 
-                    ${store.version ? "- version" : ""} ${store.version}      
-                    (${store.itemCount} item${store.itemCount == 1 ? "": "s"})`}}</small>
-            </div>   -->      
         </div>
         <div class="card-footer small">{{ footerMessage }}</div>
     </div>        
@@ -100,10 +122,12 @@
     import { useLegendStore } from "@/stores/useLegendStore"
     import LegendMetadata from "@/components/LegendMetadata"
     import LegendItems from "@/components/LegendItems"
+    import PaletteDisplay from "@/components/PaletteDisplay"
     
     const store = useLegendStore() 
     
     const itemCount = computed(() => store.items.length)
+    const palette = computed(() => store.palette)
     const importSource = ref("fromFile")
     const currentFile = ref("")
     const currentURL = ref("")

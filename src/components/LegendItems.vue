@@ -5,7 +5,7 @@
             @click.prevent="addItem()" 
             title="add item" 
             alt="add item"
-            id="add"><i class="bi bi-plus-circle"></i>&nbsp;Add Item</button>        
+            id="add"><i class="bi bi-plus-circle me-1"></i>Add Item</button>        
         <ul id="legend-items" class="legend-items list-group">
             <li v-for="(item, index) in items" :key="index" class='list-group-item1 p-0'>
                 <LegendItem 

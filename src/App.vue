@@ -25,6 +25,6 @@ export default {
   color: #2c3e50;
   margin: 5px;  
 }
-.container { width: 80%;}
+.container { width: 95%;}
 
 </style>
