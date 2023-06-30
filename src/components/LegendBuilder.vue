@@ -86,9 +86,7 @@
                     class="nav-link" 
                     href="#" 
                     @click.stop="openTab($event, 'Items')" 
-                    id="defaultOpen">
-                    <span>Items</span>
-                    <span class="badge text-bg-light ms-1 border rounded-pill">{{ itemCount }}</span>
+                    id="defaultOpen"><img src="../assets/icon-legendary.svg" width="20%" height="20%">Items<span class="badge text-bg-light ms-1 border rounded-pill">{{ itemCount }}</span>
                 </a>                       
                 <a 
                     class="nav-link" 
@@ -230,7 +228,9 @@
 </script>
 
 <style scoped>
-button { cursor: pointer; }
+button, input[type="radio"]  { 
+    cursor: pointer; 
+}
 
 /* Style the tab content */
 .tabcontent {
