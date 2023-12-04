@@ -7,13 +7,14 @@
             alt="add item"
             id="add"><i class="bi bi-plus-circle me-1"></i>Add Item</button>        
         <ul id="legend-items" class="legend-items list-group">
-            <li v-for="(item, index) in items" :key="index" class='list-group-item1 p-0'>
+            <li v-for="[key, value] in items" :key="key" class='list-group-item1 p-0'>
                 <LegendItem 
-                    :colour="item.colour" 
-                    :label="item.label" 
-                    @change-colour="changeColour(item.id, $event)" 
-                    @change-label="changeLabel(item.id, $event)"
-                    @delete-item="delItem(item)"/>                
+                    :colour="value.colour" 
+                    :label="value.label" 
+                    :id="key"
+                    @change-colour="changeColour(key, $event)" 
+                    @change-label="changeLabel(key, $event)"
+                    @delete-item="delItem(key, value)"/>                
                 <!--<button @click.prevent="moveItemUp()">up</button>-->
                 <!--need options to reorder?-->                                
             </li>
@@ -23,16 +24,17 @@
 
 <script setup> 
     import { computed } from "vue"
-    import { useLegendStore } from "@/stores/useLegendStore" 
-    import LegendItem from "@/components/LegendItem"
+    import { useLegendStore } from "@/stores/useLegendStore.js" 
+    import LegendItem from "@/components/LegendItem.vue"
     
     const store = useLegendStore() 
     const items = computed(() => store.$state.items)
+    //const items = store.$state.items
 
     const addItem = () => store.newItem()
-    const delItem = item => {
+    const delItem = (id, item) => {
         if (confirm(`delete "${item.label}" - are you sure?`))
-            store.delItem(item.id)
+            store.delItem(id)
     }
     const changeColour = (id, value) => store.setItemColour(id, value)
     const changeLabel = (id, value) => store.setItemLabel(id, value)

@@ -1,13 +1,12 @@
 <template>
-    <div class="palette-display">        
-        
-        <button 
-            type="button"
-            class="btn btn-sm btn-outline-secondary align-middle m-2 shadow"
-            title="copy palette colour values to clipboard"
-            @click.stop="copyToClipboard" 
-            :disabled="!colours.length">
-            <i class="bi bi-clipboard-plus me-1"></i>
+  <div class="palette-display">
+    <button
+      type="button"
+      class="btn btn-sm btn-outline-secondary align-middle m-2 shadow"
+      title="copy palette colour values to clipboard"
+      @click.stop="copyToClipboard"
+      :disabled="!colours.length">
+    <i class="bi bi-clipboard-plus me-1"></i>
             <span>Copy to clipboard</span>
         </button>        
         <div class="palette">
@@ -22,7 +21,6 @@
 </template>
 
 <script setup>
-    import { defineProps } from 'vue'
     const props = defineProps({
         colours: {
             type: Array,

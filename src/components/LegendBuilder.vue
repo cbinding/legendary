@@ -117,14 +117,14 @@
 
 <script setup>
     import { ref, computed, onMounted} from "vue"
-    import { useLegendStore } from "@/stores/useLegendStore"
-    import LegendMetadata from "@/components/LegendMetadata"
-    import LegendItems from "@/components/LegendItems"
-    import PaletteDisplay from "@/components/PaletteDisplay"
+    import { useLegendStore } from "@/stores/useLegendStore.js"
+    import LegendMetadata from "@/components/LegendMetadata.vue"
+    import LegendItems from "@/components/LegendItems.vue"
+    import PaletteDisplay from "@/components/PaletteDisplay.vue"
     
     const store = useLegendStore() 
     
-    const itemCount = computed(() => store.items.length)
+    const itemCount = computed(() => store.itemCount)
     const palette = computed(() => store.palette)
     const importSource = ref("fromFile")
     const currentFile = ref("")

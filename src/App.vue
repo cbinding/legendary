@@ -7,7 +7,7 @@
 <script>
 import "bootstrap/dist/css/bootstrap.min.css"
 import "bootstrap-icons/font/bootstrap-icons.css"
-import LegendBuilder from "@/components/LegendBuilder"
+import LegendBuilder from "@/components/LegendBuilder.vue"
 
 export default {
   name: "App",

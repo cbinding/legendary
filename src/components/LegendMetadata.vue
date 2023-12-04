@@ -88,7 +88,7 @@
 
 <script setup>
     import { computed } from "vue"
-    import { useLegendStore } from "@/stores/useLegendStore"
+    import { useLegendStore } from "@/stores/useLegendStore.js"
 
     const store = useLegendStore() 
     
