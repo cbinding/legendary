@@ -53,7 +53,7 @@ export const useLegendStore = defineStore('legend', {
             function replacer(key, value) { 
                 //console.log(`"${key}": "${value instanceof Map}"`)
                 if (value instanceof Map) {
-                    console.log(Array.from(value.values()))
+                    //console.log(Array.from(value.values()))
                     return (Array.from(value.values())) // or with spread: value: [...value]     
                 }
                 else 

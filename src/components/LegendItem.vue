@@ -17,7 +17,7 @@
             placeholder="Enter label for the legend item"
             v-model="labelValue" 
             @change="changeLabel"> 
-        
+       
         <div class="input-group-text p-0 border-0">
             <button
                 class="btn btn-sm btn-outline-secondary border-0"    
@@ -31,8 +31,8 @@
 </template>
 
 <script setup>
-    import {computed} from "vue"
-
+    import { computed } from "vue"
+        
     const props = defineProps({
         colour: {
             type: String,
@@ -43,14 +43,10 @@
             type: String,
             required: false,
             default: ""
-        },
-        id: {
-            type: String,
-            required: true
         }
     })
     const emit = defineEmits(['changeColour', 'changeLabel', 'deleteItem'])
-    //const itemId = computed(() => props.id )
+    
     const colourValue = computed({
         get() { return props.colour },
         set(value) { emit("changeColour", value) }        

@@ -17,10 +17,11 @@
                         @click.prevent="delMember(item)" 
                         title="`delete ${member}`"
                         alt="`delete ${member}`"
-                        id="del"><i class="bi bi-minus-circle me-1"></i></button> 
+                        id="del"><i class="bi bi-dash-circle me-1"></i>Delete</button> 
                 </li>
             </ul>
         </div>
+        <div>{{ members.join() }}</div>
     </div>
 </template>
 
