@@ -6,9 +6,10 @@
             title="add item" 
             alt="add item"
             id="add"><i class="bi bi-plus-circle me-1"></i>Add Item</button>        
-        <ul id="legend-items" class="legend-items list-group">
+        <draggable v-model="items" vid="legend-items" class="legend-items list-group">
             <li v-for="[key, value] in items" :key="key" class='list-group-item1 p-0'>
-                <LegendItem 
+                <span class="handle">&#8597;</span>
+                <span><LegendItem 
                     :colour="value.colour" 
                     :label="value.label" 
                     :id="key"
@@ -16,9 +17,9 @@
                     @change-label="changeLabel(key, $event)"
                     @delete-item="delItem(key, value)"/>                
                 <!--<button @click.prevent="moveItemUp()">up</button>-->
-                <!--need options to reorder?-->                                
+                <!--need options to reorder?-->    </span>                            
             </li>
-        </ul>
+        </draggable>
     </div>
 </template>
 
@@ -52,4 +53,8 @@
     height: 500px;
     overflow: scroll;
 }      
+.handle { 
+    cursor: pointer;
+    margin-right: 10px;
+}
 </style>

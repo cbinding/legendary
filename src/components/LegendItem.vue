@@ -1,4 +1,5 @@
 <template>
+<span>
     <div class="input-group input-group-sm flex-nowrap m-0 p-0 border">
         <div class="input-group-text p-0 border-0">
             <input 
@@ -7,7 +8,7 @@
                 aria-label="Colour" 
                 :title="colourValue" 
                 :alt="colourValue"
-                v-model="colourValue" 
+                v-model="colourValue"  
                 @change="changeColour">
         </div>
 
@@ -28,6 +29,7 @@
             </button> 
         </div>            
     </div>
+    </span>
 </template>
 
 <script setup>

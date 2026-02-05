@@ -3,6 +3,7 @@ import { toRaw } from 'vue'
 import { defineStore } from 'pinia'
 import uniqueId from 'lodash.uniqueid'
 
+
 export const useLegendStore = defineStore('legend', {
     state: () => ({
         title: "",
